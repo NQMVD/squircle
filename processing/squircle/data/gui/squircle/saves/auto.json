@@ -783,14 +783,14 @@
       "type": "VALUE"
     },
     {
-      "valueFloat": 0.019999999552965164,
-      "valueFloatPrecision": 0.01,
+      "valueFloat": 0.007999999448657036,
+      "valueFloatPrecision": 0.001,
       "className": "SliderNode",
       "path": "brightness",
       "type": "VALUE"
     },
     {
-      "valueString": "subtract",
+      "valueString": "balanced",
       "children": [
         {
           "valueBoolean": false,
@@ -805,7 +805,7 @@
           "type": "TRANSIENT"
         },
         {
-          "valueBoolean": true,
+          "valueBoolean": false,
           "className": "RadioItemNode",
           "path": "Noise Mode/subtract",
           "type": "TRANSIENT"
@@ -815,11 +815,17 @@
           "className": "RadioItemNode",
           "path": "Noise Mode/mix",
           "type": "TRANSIENT"
+        },
+        {
+          "valueBoolean": true,
+          "className": "RadioItemNode",
+          "path": "Noise Mode/balanced",
+          "type": "TRANSIENT"
         }
       ],
       "window": {
-        "posX": 0.0,
-        "posY": 198.0,
+        "posX": 220.0,
+        "posY": 0.0,
         "closed": false,
         "windowSizeX": 176.0
       },
@@ -828,7 +834,7 @@
       "type": "FOLDER"
     },
     {
-      "valueBoolean": false,
+      "valueBoolean": true,
       "className": "ToggleNode",
       "path": "shade",
       "type": "VALUE"
@@ -836,9 +842,9 @@
   ],
   "window": {
     "posX": 0.0,
-    "posY": 22.0,
+    "posY": 0.0,
     "closed": false,
-    "windowSizeX": 220.0
+    "windowSizeX": 198.0
   },
   "className": "FolderNode",
   "path": "",

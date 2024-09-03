@@ -6,26 +6,21 @@ float a, b; // Center coordinates
 float size; // Size of shape
 float n = 4; // Exponent for squircle (adjust this to change the shape)
 PGraphics backgroundLayer;
-
-PGraphics shadowLayer;
-
 PGraphics squircleLayer;
-PGraphics grainLayer;
 PShader grainShader;
 float levels = 8.0;
 int octaves = 6;
 float brightnessFactor = 0.1;
-String[] noiseModes = {"multiply", "add", "subtract", "mix"};
+String[] noiseModes = {"multiply", "add", "subtract", "mix", "balanced"};
 String currentNoiseMode = "multiply";
 
 color backgroundColor = color(30, 30, 30);
 color squircleFillColor = color(50, 50, 50);
 color squircleStrokeColor = color(70, 70, 70);
-color shadowColor = color(10, 10, 10, 70);
 
 void settings() {
   size(800, 600, P2D);
-  smooth(8); // Enable 8x anti-aliasing
+  smooth(8);
 }
 
 void setup() {
@@ -40,20 +35,16 @@ void setup() {
   hint(ENABLE_STROKE_PURE);
 
   backgroundLayer = createGraphics(width, height, P2D);
-  shadowLayer = createGraphics(width, height, P2D);
   squircleLayer = createGraphics(width, height, P2D);
-  grainLayer = createGraphics(width, height, P2D);
 
   grainShader = loadShader("grain.glsl");
   grainShader.set("u_resolution", float(width), float(height));
-  grainShader.set("u_levels", levels);
-  grainShader.set("u_octaves", octaves);
-  grainShader.set("u_brightnessFactor", brightnessFactor);
-  grainShader.set("u_mode", 0);
 
+  // Apply noise to background layer
   backgroundLayer.beginDraw();
   backgroundLayer.background(backgroundColor);
   backgroundLayer.endDraw();
+  applyNoise(backgroundLayer, 4.0, 8, 0.1, 0); // Subtle background noise
 }
 
 void draw() {
@@ -63,8 +54,9 @@ void draw() {
   currentNoiseMode = gui.radio("Noise Mode", noiseModes);
 
   // Clear the main canvas
-  // background(backgroundColor);
+  background(100);
 
+  // Draw Background
   image(backgroundLayer, 0, 0);
 
   // Draw squircle
@@ -78,24 +70,22 @@ void draw() {
 
   // Apply grain if toggled
   if (gui.toggle("shade")) {
-    applyGrain(squircleLayer, brightnessFactor, currentNoiseMode);
-    image(grainLayer, 0, 0);
-  } else {
-    image(squircleLayer, 0, 0);
+    int modeIndex = java.util.Arrays.asList(noiseModes).indexOf(currentNoiseMode);
+    applyNoise(squircleLayer, levels, octaves, brightnessFactor, modeIndex);
   }
+  
+  image(squircleLayer, 0, 0);
 }
 
-void applyGrain(PGraphics pg, float brightness, String mode) {
+void applyNoise(PGraphics layer, float levels, int octaves, float brightness, int mode) {
+  grainShader.set("u_levels", levels);
+  grainShader.set("u_octaves", octaves);
   grainShader.set("u_brightnessFactor", brightness);
-  int modeIndex = java.util.Arrays.asList(noiseModes).indexOf(mode);
-  grainShader.set("u_mode", modeIndex);
+  grainShader.set("u_mode", mode);
   
-  grainLayer.beginDraw();
-  grainLayer.clear();
-  grainLayer.shader(grainShader);
-  grainLayer.image(pg, 0, 0);
-  grainLayer.resetShader();
-  grainLayer.endDraw();
+  layer.beginDraw();
+  layer.filter(grainShader);
+  layer.endDraw();
 }
 
 void drawSquircle(PGraphics pg, float x, float y) {

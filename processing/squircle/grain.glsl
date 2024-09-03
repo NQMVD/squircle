@@ -48,8 +48,13 @@ void main() {
     finalColor = color.rgb + vec3(brightness); // Add
   } else if (u_mode == 2) {
     finalColor = color.rgb - vec3(brightness); // Subtract
-  } else {
+  } else if (u_mode == 3) {
     finalColor = mix(color.rgb, vec3(brightness), 0.5); // Mix
+  } else if (u_mode == 4) {
+    float balancedNoise = (n - 0.5) * 2.0 * u_brightnessFactor; // Map to [-1, 1] and apply brightness factor
+    finalColor = color.rgb + vec3(balancedNoise);
+  } else {
+    finalColor = color.rgb; // Default case
   }  
   
   gl_FragColor = vec4(finalColor, color.a);
