@@ -1,1 +1,3 @@
 # squircle
+
+[screenshot](image.png)
