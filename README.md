@@ -1,3 +1,3 @@
 # squircle
 
-[screenshot](image.png)
+![screenshot](image.png)
