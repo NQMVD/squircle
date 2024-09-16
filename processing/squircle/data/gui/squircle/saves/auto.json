@@ -824,8 +824,8 @@
         }
       ],
       "window": {
-        "posX": 220.0,
-        "posY": 0.0,
+        "posX": 0.0,
+        "posY": 176.0,
         "closed": false,
         "windowSizeX": 176.0
       },
