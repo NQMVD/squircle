@@ -2,7 +2,7 @@ mem = require'memoize'
 stat = require'statistical'
 lume = require'lume'
 -- needs to be on path
-loveframes = require'loveframes'
+-- loveframes = require'loveframes'
 
 squircle_radius = 5
 angle_res = 0.01
@@ -46,9 +46,9 @@ function love.draw()
   -- squircles
   -- love.graphics.rectangle("line", 100, 100, 200, 200, 30)
   love.graphics.setColor(0.2, 0.2, 0.2)
-  draw_squircle("fill", 300, 100, 200, squircle_radius.value)
+  draw_squircle("fill", 300, 100, 200, squircle_radius)
   love.graphics.setColor(0.9, 0.9, 0.9)
-  draw_squircle("line", 300, 100, 200, squircle_radius.value)
+  draw_squircle("line", 300, 100, 200, squircle_radius)
 
   -- suit.draw()
 end
